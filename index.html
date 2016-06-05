@@ -1,38 +1,214 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+    <title>Big Data - внутри и снаружи</title>
 
-		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css">
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/night.css">
 
-		<!-- Theme used for syntax highlighting of code -->
-		<link rel="stylesheet" href="lib/css/zenburn.css">
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
 
-		<!-- Printing and PDF exports -->
-		<script>
+    <!-- Printing and PDF exports -->
+    <script>
 			var link = document.createElement( 'link' );
 			link.rel = 'stylesheet';
 			link.type = 'text/css';
 			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
 			document.getElementsByTagName( 'head' )[0].appendChild( link );
-		</script>
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
-			</div>
-		</div>
 
-		<script src="lib/js/head.min.js"></script>
-		<script src="js/reveal.js"></script>
 
-		<script>
+
+    </script>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <section><h1>BigData внутри и снаружи</h1>
+            <p>Неганов Александр 2016 @ D3C0D3</p>
+        </section>
+        <section>
+            <h2>О себе</h2>
+            <p>ikkeps @ github, twitter, vk</p>
+            <p>Сейчас - руководитель направления RTB в qmobi.com</p>
+        </section>
+
+        <section>
+            <h2>Определение</h2>
+            <p class="fragment fade-up">buzzword</p>
+            <p class="fragment fade-up">см. <a href="http://www.bullshitbingo.net/cards/bigdata/">http://www.bullshitbingo.net/cards/bigdata/</a>
+            </p>
+            <p class="fragment fade-up"><em>V</em>olume</p>
+            <p class="fragment fade-up"><em>V</em>elocity</p>
+            <p class="fragment fade-up"><em>V</em>ariety</p>
+        </section>
+
+        <section>
+            <h2>Применение</h2>
+            <p>Статистика</p>
+            <p>BI</p>
+            <p>Machine learning</p>
+            <p>Обработка текста</p>
+        </section>
+        <section>
+            <h2>Чем интересно?</h2>
+            <p>Алгоритмы из разных областей</p>
+            <p>Опыт в применении различных инструментов</p>
+            <p>My d*** is bigger than yours</p>
+        </section>
+        <section>
+            <h2>Volume + Velocity</h2>
+        </section>
+        <section>
+            <h2>"Обычные" RDBMS</h2>
+            <p>Мало памяти, диски медленные</p>
+            <p>Индексы, схемы вот это всё</p>
+
+        </section>
+        <section>
+            <h2>Не совсем то</h2>
+            <p>Данные разношерстные (variety)</p>
+            <p>Алгоритмы другие</p>
+            <p>На одной машине</p>
+        </section>
+        <section>
+            <h2>Распределенность</h2>
+            <p>Алгоритм должен позволять "дробить" задачу.</p>
+            <p>Распределение заданий</p>
+            <p>Общее хранилище</p>
+            <p>Fault-tolerance</p>
+        </section>
+        <section>
+            <h2>MapReduce</h2>
+            <img src="mapreduceimage.gif" style="background:white;"/>
+            <p>Map: <em>f(o) -> [(k,v)]</em></p>
+            <p>Reduce: <em>g([v]) -> v</em></p>
+            <p>Можно применять итеративно</p>
+        </section>
+        <section>
+            <h2>MapReduce</h2>
+            <p>Нужно группировать:</p>
+            <p>map -> <em>группировка по ключам</em> -> reduce</p>
+            <p>Где только не реализовано</p>
+        </section>
+        <section>
+            <h2>А как же Velocity?</h2>
+            <p>Результаты нужны быстро</p>
+            <p>Обрабатывать весь массив "медленно"</p>
+        </section>
+        <section>
+            <h2>Partitioning</h2>
+            <p>Возможность разбить на части</p>
+            <p>Обрабатывать только то что надо</p>
+            <p>Но разбивка одна, как правило</p>
+        </section>
+
+        <section>
+            <h2>"Projections"</h2>
+            <p>Сохраняем предрассчитаные данные</p>
+            <p>Да, Materialized views</p>
+            <p>Где-то руками, где-то изкоробки</p>
+        </section>
+
+        <section>
+            <h2>Но тут вдруг</h2>
+            <p>Память внезапно дешевле, ядер больше</p>
+            <p>Конечно, хочется и на одной машине чтоб было быстро</p>
+        </section>
+
+        <section>
+            <h2>Columnar storage</h2>
+            <p>Можно быстро и эффективно сжимать/разжимать</p>
+            <p>delta encoding, RLE, dictionary, lz4/snappy/whatever</p>
+            <p>Vectorization</p>
+            <p>Как БД, так и форматы сериализации</p>
+        </section>
+
+        <section><h2>Variety</h2>
+            <p>Сериализация по вкусу (json, csv, plain text)</p>
+            <p>Очистка данных - бо́льшая часть проблем</p>
+            <p>Но батчи же эффективнее?</p>
+        </section>
+
+        <section>
+            <h2>Lambda Architecture</h2>
+            <img src="la-overview_small.png"/>
+        </section>
+        <section>
+            <h2>Lambda Architecture</h2>
+            <p>Одинаковая реализация speed и batch layer</p>
+            <p>Query -> Merge</p>
+        </section>
+        <section>
+            <h2>Инструменты</h2>
+        </section>
+        <section>
+            <h2>HP Vertica</h2>
+            <p>MPP, Shared nothing, Partitioning</p>
+            <p>не NoSQL, совсем даже SQL, но круто!</p>
+            <p>Оптимизации - быстрее памяти!</p>
+            <p>Но дорого</p>
+        </section>
+        <section>
+            <h2>Cassandra</h2>
+            <p>MPP, Shared nothing, compression</p>
+            <p>Совсем NoSQL, почти key-value(s)</p>
+            <p>+Всякие счетчики, пользовательские структуры</p>
+        </section>
+        <section>
+            <h2>Druid.io</h2>
+            <p>Сделан в Metamarkets</p>
+            <p>Для timeseries статистики (timestamp, dimensions, metrics)</p>
+            <p>Columnar, MPP, Partitioning, Bitmap index, compression, lambda architecture</p>
+            <p>Можно обрабатывать в Hadoop</p>
+            <p>Пять типов нод</p>
+        </section>
+        <section>
+            <h2>Hadoop</h2>
+            <p>Мэйнстрим и основной игрок</p>
+            <p>HDFS, YARN, MapReduce</p>
+            <p>Множество инструментов и надстроек</p>
+            <p>Но скорее для реальной&trade; BigData</p>
+        </section>
+        <section>
+            <h2>Spark</h2>
+            <p>Moar in-memory!</p>
+            <p>Много коннекторов</p>
+            <p>Удобно для lambda architecture</p>
+            <p>Легко поиграться (python, java, scala)</p>
+            <p>Есть ML, Graph, Streaming, свой SQL</p>
+        </section>
+        <section>
+            <h2>Elastic(search)</h2>
+            <p>Изначально fulltext search</p>
+            <p>Двигаются в направлении БД общего назначения</p>
+            <p>MPP, fault-tolerant</p>
+            <p>Schema(less)</p>
+            <p>но в некоторых местах пока медленновато</p>
+        </section>
+        <section>
+            <h2>Apache Kafka</h2>
+            <p>Мэйнстрим</p>
+            <p>Кольцевой буффер</p>
+            <p>Но надо хранить текущий offset вместе с данными</p>
+        </section>
+        <section>
+            <h2>R</h2>
+            <p>¯\_(ツ)_/¯</p>
+        </section>
+        <section>
+            <h2>Спасибо за внимание!</h2>
+        </section>
+    </div>
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+
+<script>
 			// More info https://github.com/hakimel/reveal.js#configuration
 			Reveal.initialize({
 				history: true,
@@ -45,6 +221,9 @@
 					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
 				]
 			});
-		</script>
-	</body>
+
+
+
+</script>
+</body>
 </html>
